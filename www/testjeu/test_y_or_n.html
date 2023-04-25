@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invite de commande</title>
+  <link rel="stylesheet" href="../css/inferface.css">
+  <script src="../js/interface.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.2/brython.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.2/brython_stdlib.min.js">
+  </script>
+</head>
+<body onload="brython()">
+  
+  <div class="container">
+    
+    
+    <div class="input-container">
+        <label for="input1">C:\></label>
+        <input type="text" id="input1" placeholder="Entrez une commande..." style = "color: #FFF;" onkeydown="checkCommand(event)">
+      <!-- <button id="button">Exécuter</button> faire une fonction js qui fait croire que le bouton c'est entrée-->
+    </div>
+    
+    <div id="output" class="output">
+        <div id="result"></div>
+        <script type="text/python">
+        from browser import document, bind
+
+        results = []
+       
+
+        def Yes_Or_No(result):        
+
+            if result == "y":
+                return "OK."
+            elif result == "n":
+                return "RIP."
+
+
+        @bind(document, "keydown")
+        def keyDownHandler(e):
+            if e.keyCode == 13:
+                printchar()
+
+        def printchar():
+            input1 = document.getElementById("input1")
+            result = input1.value
+            
+            if len(results) == 25:
+              results.pop()
+
+            if result == "./blackjack.py":
+                play = "Voulez-vous jouer une partie de blackjack ? Tapez 'y' ou 'n' :"
+                results.insert(0, play)
+                all_results = "Voulez-vous jouer une partie de blackjack ? Tapez 'y' ou 'n' :"
+                document.getElementById("result").innerHTML = all_results
+                input1.value = ""
+                response = Yes_Or_No(input1.value)
+                if response == "OK.":
+                  results.insert(0, response)
+                  document.getElementById("result").innerHTML = "<br>".join(results)
+                elif response == "RIP.":
+                  results.insert(0, response)
+                  document.getElementById("result").innerHTML = "<br>".join(results)
+            else:
+                results.insert(0, result)
+                all_results = "<br>".join(results)
+                document.getElementById("result").innerHTML = all_results
+
+            input1.value = ""  # nettoyer l'input
+ 
+        </script>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+from browser import document, bind
+
+results = []
+
+
+def Yes_Or_No(result):
+    if result == "y":
+        return "OK."
+    elif result == "n":
+        return "RIP."
+
+
+@bind(document, "keydown")
+def keyDownHandler(e):
+    if e.keyCode == 13:
+        printchar()
+
+
+def printchar():
+    input1 = document.getElementById("input1")
+    result = input1.value
+
+    if len(results) == 25:
+        results.pop()
+
+    if result == "./blackjack.py":
+        play = "Voulez-vous jouer une partie de blackjack ? Tapez 'y' ou 'n' :"
+        results.insert(0, play)
+        all_results = "<br>".join(results)
+        document.getElementById("result").innerHTML = all_results
+        input1.value = ""
+        response = Yes_Or_No(input1.value)
+        if response == "OK.":
+            results.insert(0, input1.value)
+            results.insert(0, response)
+            document.getElementById("result").innerHTML = "<br>".join(results)
+        elif response == "RIP.":
+            results.insert(0, input1.value)
+            results.insert(0, response)
+            document.getElementById("result").innerHTML = "<br>".join(results)
+    else:
+        results.insert(0, result)
+        all_results = "<br>".join(results)
+        document.getElementById("result").innerHTML = all_results
+
+    input1.value = ""  # nettoyer l'input

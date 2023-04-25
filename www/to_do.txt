@@ -1,0 +1,4 @@
+livre d'or /
+fiche technique /
+mentions légales /
+code pour accédé a la page web (modifier sur apache2) htaccess ~

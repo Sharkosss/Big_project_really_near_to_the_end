@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Jeu de devinette de nombre</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.9.2/www/src/brython.js"></script>
+  </head>
+  <body onload="brython()">
+    <h1>Jeu de devinette de nombre</h1>
+    <p>Devinez le nombre entre 1 et 100</p>
+    <input type="text" id="input_nombre" />
+    <button onclick="deviner()">Devinez</button>
+    <p id="resultat"></p>
+
+    <script type="text/python">
+      from browser import document, window
+      import random
+
+      nombre_secret = random.randint(1, 100)
+      nombre_essais = 0
+
+      def deviner():
+          global nombre_essais
+          nombre_essais += 1
+          input_nombre = document["input_nombre"].value
+          if not input_nombre.isdigit():
+              document["resultat"].text = "Entrez un nombre valide"
+          else:
+              input_nombre = int(input_nombre)
+              if input_nombre == nombre_secret:
+                  document["resultat"].text = f"Félicitations, vous avez trouvé le nombre en {nombre_essais} essais !"
+              elif input_nombre < nombre_secret:
+                  document["resultat"].text = "Le nombre est plus grand"
+              else:
+                  document["resultat"].text = "Le nombre est plus petit"
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Invite de commande</title>
+  <link rel="stylesheet" href="../css/inferface.css">
+  <script src="../js/interface.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.2/brython.min.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.11.2/brython_stdlib.min.js">
+  </script>
+</head>
+<body onload="brython()">
+  
+  <div class="container">
+    
+    
+    <div class="input-container">
+        <label for="input1">C:\></label>
+        <input type="text" id="input1" placeholder="Entrez une commande..." style = "color: #FFF;" onkeydown="checkCommand(event)">
+      <!-- <button id="button">Exécuter</button> faire une fonction js qui fait croire que le bouton c'est entrée-->
+    </div>
+    
+    <div id="output" class="output">
+        <div id="result"></div>
+        <script type="text/python">
+        from browser import document, bind
+
+        results = []
+       
+
+        def Yes_Or_No():        
+            input1 = document.getElementById("input1")
+            result = input1.value
+
+
+            if result == "y":
+                result = "OK."
+                results.insert(0, result)
+                yes = "OK."
+                document.getElementById("result").innerHTML = yes
+            elif result == "n":
+                results.insert(0, result)
+                no = "RIP."
+                document.getElementById("result").innerHTML = no
+              
+
+        @bind(document, "keydown")
+        def keyDownHandler(e):
+            if e.keyCode == 13:
+                printchar()
+
+        def printchar():
+            input1 = document.getElementById("input1")
+            result = input1.value
+            
+            if len(results) == 25:
+              results.pop()
+
+            if result == "./blackjack.py":
+                play = "Voulez-vous jouer une partie de blackjack ? Tapez 'y' ou 'n' :"
+                results.insert(0, play)
+                all_results = "Voulez-vous jouer une partie de blackjack ? Tapez 'y' ou 'n' :"
+                document.getElementById("result").innerHTML = all_results
+                input1.value = ""
+                Yes_Or_No(result)
+            else:
+                results.insert(0, result)
+                all_results = "<br>".join(results)
+                document.getElementById("result").innerHTML = all_results
+
+            input1.value = ""  # nettoyer l'input
+ 
+        </script>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+<!-- YesOrNo = input1.value
+
+                if YesOrNo == "y":
+                    results.insert(0, "gggg")                                        # Si l'utilisateur tape 'y'
+                    all_results = "<br>".join(results)
+
+                if YesOrNo == "n": 
+                    results.insert(0, "fffff")                                      # Si l'utilisateur tape 'n'
+                    all_results = "<br>".join(results)
+                
+                                                                            # Ajouter la réponse de l'utilisateur à la liste des résultats
+
+                document.getElementById("result").innerHTML = all_results 
+              
+              
+              
+              results.insert(0, result)
+                all_results = "Voulez-vous jouer une partie de blackjack ? Tapez 'y' ou 'n' :"
+                document.getElementById("result").innerHTML = all_results
+                input1.value = ""
+                input1 = document.getElementById("input1")
+                Yes_Or_No(result)
+              #results.insert(0, result) # ajouter le nouveau résultat à la liste en haut
+              
+         # stockage des résultats   
+            
+            
+            """Fonction qui calcule la somme des deux nombres saisis"""
+               # Supprimer le premier résultat si la liste en contient plus de 25
+            
+            
+            # créer une chaîne contenant tous les résultats
+            # Vérifier si la valeur saisie est égale à "./blackjack.py"
+
+
+              else:
+                    input_str = input("Please enter 'y' or 'n': ")
+              -->
